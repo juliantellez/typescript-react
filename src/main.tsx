@@ -1,9 +1,9 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import * as styles from "./main.scss";
+import Example from "./Example";
 
-const App = () => <div>Hello World</div>;
+const App: React.FC = () => <Example />;
 
 const container = document.getElementById("main");
 ReactDOM.render(<App />, container);

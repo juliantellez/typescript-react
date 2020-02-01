@@ -1,2 +1,5 @@
 # typed-scss-modules definition files
 *.scss.d.ts
+
+# NYC
+coverage
