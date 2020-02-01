@@ -3,7 +3,13 @@
   "version": "0.0.1",
   "description": "typescript react starter",
   "scripts": {
-    "start": "TS_NODE_PROJECT=tsconfig.json webpack-dev-server --env.NODE_ENV=development --config ./config/webpack/webpack.config.ts"
+    "build": "npm run types:sass && TS_NODE_PROJECT=tsconfig.json webpack --env.NODE_ENV=production --config ./config/webpack/webpack.config.ts",
+    "build:analyze": "npm run types:sass && TS_NODE_PROJECT=tsconfig.json webpack ---env.ANALYZE --env.NODE_ENV=production --config ./config/webpack/webpack.config.ts",
+    "clean": "rm -rf dist **/*.scss.d.ts",
+    "dev-server": "TS_NODE_PROJECT=tsconfig.json webpack-dev-server --env.NODE_ENV=development --config ./config/webpack/webpack.config.ts",
+    "start": "npm run types:sass:watch | npm run start",
+    "types:sass": "npm run clean && tsm src --camelCase",
+    "types:sass:watch": "npm run types:sass -- --watch"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -25,9 +31,11 @@
     "babel-loader": "^8.0.6",
     "copy-webpack-plugin": "5.1.1",
     "html-webpack-plugin": "3.2.0",
+    "node-sass": "^4.13.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "ts-node": "^8.6.2",
+    "typed-scss-modules": "^1.1.0",
     "typescript": "3.7.5",
     "webpack": "4.41.5",
     "webpack-bundle-analyzer": "3.6.0",

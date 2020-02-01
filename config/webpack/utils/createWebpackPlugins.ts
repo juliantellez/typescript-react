@@ -30,7 +30,7 @@ const createWebpackPlugins = (
     ])
   ];
 
-  if (env.ANALYZE) {
+  if (env.analyze) {
     plugins.push(
       new BundleAnalyzerPlugin({
         openAnalyzer: true
