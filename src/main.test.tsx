@@ -6,7 +6,9 @@ describe("Example Test", () => {
     document.body.appendChild(container);
     require("./main.tsx");
 
-    const value = document.querySelector('[aria-label="example"]').innerHTML;
+    const element = document.querySelector('[aria-label="example"]');
+
+    const value = element && element.innerHTML;
     const expected = "Hello World!";
 
     expect(value).toEqual(expected);
