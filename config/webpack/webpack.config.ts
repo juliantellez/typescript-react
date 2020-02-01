@@ -1,58 +1,58 @@
-import * as path from "path";
-import { Configuration } from "webpack";
+import * as path from 'path'
+import { Configuration } from 'webpack'
 
-import jsRule from "./rules/jsRules";
-import cssRule from "./rules/cssRule";
+import jsRule from './rules/jsRules'
+import cssRule from './rules/cssRule'
 
-import createWebpackEnv from "./utils/createWepbackEnv";
-import createWebpackPlugins from "./utils/createWebpackPlugins";
-import createWebpackPaths from "./utils/createWebpackPaths";
+import createWebpackEnv from './utils/createWepbackEnv'
+import createWebpackPlugins from './utils/createWebpackPlugins'
+import createWebpackPaths from './utils/createWebpackPaths'
 
-import { WebpackArgs } from "./types";
+import { WebpackArgs } from './types'
 
-const PATH_ROOT = path.resolve(__dirname, "..", "..");
+const PATH_ROOT = path.resolve(__dirname, '..', '..')
 
 const createWebpackConfig = (args: WebpackArgs): Configuration => {
-  const env = createWebpackEnv(args);
-  const paths = createWebpackPaths(PATH_ROOT);
+    const env = createWebpackEnv(args)
+    const paths = createWebpackPaths(PATH_ROOT)
 
-  return {
-    mode: env.isProduction() ? "production" : "development",
-    entry: paths.src,
-    output: {
-      chunkFilename: "chunk.[name].[contenthash].js",
-      path: paths.build,
-      filename: "[name].js",
-      publicPath: "/"
-    },
-    resolve: {
-      extensions: [".tsx", ".ts", ".js", "jsx"]
-    },
-    module: {
-      rules: [jsRule, cssRule]
-    },
-    plugins: createWebpackPlugins(env, paths),
-    devtool: env.isProduction() ? "source-map" : "cheap-eval-source-map",
-    cache: env.isProduction() ? false : true,
-    optimization: {
-      splitChunks: {
-        chunks: "initial",
-        cacheGroups: {
-          vendors: false,
-          default: false
-        }
-      }
-    },
-    ...(env.isDevelopment() && {
-      devServer: {
-        compress: true,
-        contentBase: paths.src,
-        hot: true,
-        port: 3000,
-        historyApiFallback: true
-      }
-    })
-  };
-};
+    return {
+        mode: env.isProduction() ? 'production' : 'development',
+        entry: paths.src,
+        output: {
+            chunkFilename: 'chunk.[name].[contenthash].js',
+            path: paths.build,
+            filename: '[name].js',
+            publicPath: '/',
+        },
+        resolve: {
+            extensions: ['.tsx', '.ts', '.js', 'jsx'],
+        },
+        module: {
+            rules: [jsRule, cssRule],
+        },
+        plugins: createWebpackPlugins(env, paths),
+        devtool: env.isProduction() ? 'source-map' : 'cheap-eval-source-map',
+        cache: env.isProduction() ? false : true,
+        optimization: {
+            splitChunks: {
+                chunks: 'initial',
+                cacheGroups: {
+                    vendors: false,
+                    default: false,
+                },
+            },
+        },
+        ...(env.isDevelopment() && {
+            devServer: {
+                compress: true,
+                contentBase: paths.src,
+                hot: true,
+                port: 3000,
+                historyApiFallback: true,
+            },
+        }),
+    }
+}
 
-export default createWebpackConfig;
+export default createWebpackConfig

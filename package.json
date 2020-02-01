@@ -7,7 +7,7 @@
     "build:analyze": "npm run types:sass && TS_NODE_PROJECT=tsconfig.json webpack ---env.ANALYZE --env.NODE_ENV=production --config ./config/webpack/webpack.config.ts",
     "clean": "rm -rf dist **/*.scss.d.ts",
     "dev:server": "TS_NODE_PROJECT=tsconfig.json webpack-dev-server --env.NODE_ENV=development --config ./config/webpack/webpack.config.ts",
-    "lint": "eslint --ext .tsx --ext .ts ./src",
+    "lint": "eslint --ext .tsx --ext .ts .",
     "lint:fix": "npm run lint -- --fix",
     "start": "npm run types:sass:watch | npm run dev:server",
     "test": "jest",
