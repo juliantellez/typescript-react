@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable no-undef */
-
 console.log('Hello World')
 // require('yargs')
 //     .scriptName('typescript-react')

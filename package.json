@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "typescript react starter",
   "bin": {
-      "typescript-react": "./bin/install.js"
+      "typescript-react": "./bin"
   },
   "scripts": {
     "build": "npm run types:sass && TS_NODE_PROJECT=tsconfig.json webpack --env.NODE_ENV=production --config ./config/webpack/webpack.config.ts",
