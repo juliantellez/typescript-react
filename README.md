@@ -1,3 +1,12 @@
+# Typescript React
+
+A one line command to install a typescript + react application. It runs on [node v12](https://github.com/nodejs/Release).
+
+# Install
+```
+npx typescript-react
+```
+
 # What's inside?
 
 - [Babel](https://github.com/babel/babel): A compiler for writing next generation JavaScript.
