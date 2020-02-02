@@ -2,6 +2,9 @@
   "name": "typescript-react",
   "version": "0.0.2",
   "description": "typescript react starter",
+  "bin": {
+      "install": "./bin/install.js"
+  },
   "scripts": {
     "build": "npm run types:sass && TS_NODE_PROJECT=tsconfig.json webpack --env.NODE_ENV=production --config ./config/webpack/webpack.config.ts",
     "build:analyze": "npm run types:sass && TS_NODE_PROJECT=tsconfig.json webpack ---env.ANALYZE --env.NODE_ENV=production --config ./config/webpack/webpack.config.ts",

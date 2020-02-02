@@ -17,7 +17,7 @@
 
 # Configurations files
 
-Libraries such as babel, jest, commitlint and eslint use [comsmiconfig](https://github.com/davidtheclark/cosmiconfig) to load their corresponding configurations. The configuration file could be one of the following:
+Libraries such as babel, husky, commitlint and eslint use [comsmiconfig](https://github.com/davidtheclark/cosmiconfig) to load their corresponding configurations. The configuration file could be one of the following:
 
 - a package.json property
 - a JSON or YAML, extensionless "rc file"
