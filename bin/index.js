@@ -16,13 +16,15 @@ require('yargs')
                 describe: 'directory name',
             })
         },
-        async argv => {
+        async args => {
             const fs = require('fs')
             const path = require('path')
             const util = require('util')
 
+            console.log('CURRENT_DIR:', process.cwd())
+
             const ROOT = path.resolve(__dirname, '..', '..')
-            const directory = ROOT + '/' + argv.name
+            const directory = ROOT + '/' + args.name
 
             if (!fs.existsSync(directory)) {
                 console.log('Creating folder: ' + directory)
