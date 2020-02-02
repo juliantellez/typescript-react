@@ -4,7 +4,7 @@ import { Configuration } from 'webpack'
 import jsRule from './rules/jsRules'
 import cssRule from './rules/cssRule'
 
-import createWebpackEnv from './utils/createWepbackEnv'
+import createWebpackEnv from './utils/createWebpackEnv'
 import createWebpackPlugins from './utils/createWebpackPlugins'
 import createWebpackPaths from './utils/createWebpackPaths'
 
