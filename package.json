@@ -76,6 +76,8 @@
     "webpack-dev-server": "3.10.2"
   },
   "dependencies": {
+    "chalk": "^3.0.0",
+    "inquirer": "^7.0.4",
     "yargs": "^15.1.0"
   }
 }
