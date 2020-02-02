@@ -10,6 +10,7 @@
 - [React + React Dom](https://github.com/facebook/react): Declarative, efficient, and flexible JavaScript library for building user interfaces.
 - [React Testing Library](https://github.com/testing-library/react-testing-library): React DOM testing utilities that encourage good testing practices.
 - [Sass](https://github.com/sass/sass): CSS with superpowers.
+- [Storybook](https://github.com/storybookjs/storybook): Development environment for UI components.
 - [Typescript](https://github.com/microsoft/TypeScript): Superset of JavaScript that compiles to clean JavaScript output.
 - [Webpack](https://github.com/webpack/webpack): Bundle JavaScript files for usage in a browser.
 
