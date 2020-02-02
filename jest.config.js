@@ -16,6 +16,10 @@ const config = {
          * Exclude style declaration files
          */
         '!src/**/*.{scss,css,scss}.d.ts',
+        /**
+         * Exclude storybook files
+         */
+        '!src/**/*/*.stories.{ts,tsx,js,jsx}',
     ],
     coverageReporters: ['lcov', 'text', 'text-summary'],
     coverageThreshold: {
