@@ -10,13 +10,13 @@ const chalk = require('chalk')
 const exec = util.promisify(require('child_process').exec)
 
 /**
- *
  * @param {string} projectName
  * @param {string} directoryPath
+ *
+ * @returns {string} directory
  */
 const createProjectDir = (projectName, directoryPath) => {
     const directory = directoryPath + '/' + projectName
-
     if (!fs.existsSync(directory)) {
         console.log(chalk.yellow('Creating folder: ' + directory))
         fs.mkdirSync(directory)
@@ -24,15 +24,16 @@ const createProjectDir = (projectName, directoryPath) => {
         console.log(chalk.red('Directory already exists'))
         process.exit(0)
     }
+
+    return directory
 }
 
 /**
- *
  * @param {string} projectName
  */
-const main = async projectName => {
+const main = async answers => {
     try {
-        createProjectDir(projectName, process.cwd())
+        const directory = createProjectDir(answers.projectName, process.cwd())
         /**
          * Move to current dir
          */
@@ -81,7 +82,7 @@ const main = async projectName => {
          */
         const { stdout: installDeps } = await exec('npm install')
         console.log(
-            chalk.yellow('NPM INSTALL BOILERPLATE]'),
+            chalk.yellow('[NPM INSTALL BOILERPLATE]'),
             chalk.gray(installDeps)
         )
 
@@ -92,7 +93,7 @@ const main = async projectName => {
             'npm uninstall typescript-react'
         )
         console.log(
-            chalk.yellow('NPM UNINSTALL BOILERPLATE]'),
+            chalk.yellow('[NPM UNINSTALL BOILERPLATE]'),
             chalk.gray(uninstall)
         )
     } catch (e) {
