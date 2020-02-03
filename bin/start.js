@@ -87,7 +87,7 @@ const main = async answers => {
         )
 
         /**
-         * Uninstall typescript-react
+         * HouseKeeping
          */
         const { stdout: uninstall } = await exec(
             'npm uninstall typescript-react'
@@ -96,6 +96,7 @@ const main = async answers => {
             chalk.yellow('[NPM UNINSTALL BOILERPLATE]'),
             chalk.gray(uninstall)
         )
+        await exec(`rm -rf ${directory}/typescript-react`)
     } catch (e) {
         console.log(chalk.red(e))
         process.exit(1)
