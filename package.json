@@ -2,6 +2,7 @@
   "name": "typescript-react",
   "version": "0.0.3",
   "description": "typescript react starter",
+  "homepage": "https://github.com/juliantellez/typescript-react#readme",
   "bin": {
     "typescript-react": "./bin/index.js"
   },

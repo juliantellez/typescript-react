@@ -42,25 +42,29 @@ const main = async answers => {
         /**
          * Create Package.json
          */
+        console.log(chalk.yellow('[ NPM INIT ]'))
         const { stdout: init } = await exec('npm init --yes')
-        console.log(chalk.yellow('[NPM INIT]'), chalk.gray(init))
+        console.log(chalk.gray(init))
 
         /**
          * Install latest version
          */
+        console.log(chalk.yellow('[ NPM INSTALL ]'))
         const { stdout: install } = await exec(
             'npm i typescript-react@latest --save-dev'
         )
-        console.log(chalk.yellow('[NPM INSTALL]'), chalk.gray(install))
+        console.log(chalk.gray(install))
 
         /**
          * Copy dependencies to current dir
          */
+        console.log(chalk.yellow('[ COPY BOILERPLATE ]'))
         const packageJson = require(`${directory}/package.json`)
-        const { stdout: copy } = await exec(
-            `cp -R ${directory}/node_modules/typescript-react/{.,}* ${directory}`
+
+        const { stdout: copyDotFiles } = await exec(
+            `find ${directory}/node_modules/typescript-react -type f -maxdepth 1 -exec cp -p {}  ${directory}/ \\;`
         )
-        console.log(chalk.yellow('[COPY BOILERPLATE]'), chalk.gray(copy))
+        console.log(chalk.gray(copyDotFiles))
 
         /**
          * Aggregate Json files
@@ -80,23 +84,18 @@ const main = async answers => {
         /**
          * Install dependencies
          */
+        console.log(chalk.yellow('[ NPM INSTALL DEPENDENCIES ]'))
         const { stdout: installDeps } = await exec('npm install')
-        console.log(
-            chalk.yellow('[NPM INSTALL BOILERPLATE]'),
-            chalk.gray(installDeps)
-        )
+        console.log(chalk.gray(installDeps))
 
         /**
          * HouseKeeping
          */
+        console.log(chalk.yellow('[ NPM UNINSTALL BOILERPLATE ]'))
         const { stdout: uninstall } = await exec(
             'npm uninstall typescript-react'
         )
-        console.log(
-            chalk.yellow('[NPM UNINSTALL BOILERPLATE]'),
-            chalk.gray(uninstall)
-        )
-        await exec(`rm -rf ${directory}/typescript-react`)
+        console.log(chalk.gray(uninstall))
     } catch (e) {
         console.log(chalk.red(e))
         process.exit(1)
