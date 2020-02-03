@@ -1,6 +1,6 @@
 {
   "name": "typescript-react",
-  "version": "0.0.0",
+  "version": "0.0.3",
   "description": "typescript react starter",
   "bin": {
     "typescript-react": "./bin/index.js"
@@ -76,8 +76,8 @@
     "webpack-dev-server": "3.10.2"
   },
   "dependencies": {
-    "chalk": "^3.0.0",
-    "inquirer": "^7.0.4",
-    "yargs": "^15.1.0"
+    "chalk": "3.0.0",
+    "inquirer": "7.0.4",
+    "yargs": "15.1.0"
   }
 }
