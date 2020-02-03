@@ -40,45 +40,31 @@ const main = async answers => {
         process.chdir(directory)
 
         /**
-         * Create Package.json
-         */
-        console.log(chalk.yellow('[ NPM INIT ]'))
-        const { stdout: init } = await exec('npm init --yes')
-        console.log(chalk.gray(init))
-
-        /**
          * Install latest version
-         */
-        console.log(chalk.yellow('[ NPM INSTALL ]'))
-        const { stdout: install } = await exec(
-            'npm i typescript-react@latest --save-dev'
-        )
-        console.log(chalk.gray(install))
-
-        /**
          * Copy dependencies to current dir
          */
-        console.log(chalk.yellow('[ COPY BOILERPLATE ]'))
-        const packageJson = require(`${directory}/package.json`)
+        console.log(chalk.yellow('[ FETCH ]'))
 
-        const { stdout: copyDotFiles } = await exec(
-            `find ${directory}/node_modules/typescript-react -type f -maxdepth 1 -exec cp -p {}  ${directory}/ \\;`
+        const { stdout: fetch } = await exec(
+            `git clone git@github.com:juliantellez/typescript-react.git ${directory} --depth 1`
         )
-        console.log(chalk.gray(copyDotFiles))
+        console.log(chalk.gray(fetch))
 
         /**
          * Aggregate Json files
          */
-        const boilerplateJson = require(`${directory}/node_modules/typescript-react/package.json`)
+        const packageJson = require(`${directory}/package.json`)
+
         const unifiedPackageJson = {
-            ...packageJson,
-            scripts: boilerplateJson.scripts,
-            devDependencies: boilerplateJson.devDependencies,
+            name: answers.projectName,
+            version: '0.0.0',
+            scripts: packageJson.scripts,
+            devDependencies: packageJson.devDependencies,
         }
 
         fs.writeFileSync(
             `${directory}/package.json`,
-            JSON.stringify(unifiedPackageJson)
+            JSON.stringify(unifiedPackageJson, void 0, 2)
         )
 
         /**
@@ -89,13 +75,13 @@ const main = async answers => {
         console.log(chalk.gray(installDeps))
 
         /**
-         * HouseKeeping
+         * House Keeping
          */
-        console.log(chalk.yellow('[ NPM UNINSTALL BOILERPLATE ]'))
-        const { stdout: uninstall } = await exec(
-            'npm uninstall typescript-react'
+        console.log(chalk.yellow('[ HOUSE KEEPING ]'))
+        const { stdout: houseKeeping } = await exec(
+            `rm -rf ${directory}/bin ${directory}/.git `
         )
-        console.log(chalk.gray(uninstall))
+        console.log(chalk.gray(houseKeeping))
     } catch (e) {
         console.log(chalk.red(e))
         process.exit(1)
