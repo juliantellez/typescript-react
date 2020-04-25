@@ -53,11 +53,11 @@ const promisifySpawn = (command) => {
 const createProjectDir = (projectName, directoryPath) => {
     const directory = directoryPath + "/" + projectName;
     if (!fs.existsSync(directory)) {
-        process.stdout.write(step.CLONE);
-        process.stdout.write(chalk.yellow("Creating folder: " + directory));
+        console.log(step.CLONE);
+        console.log(chalk.yellow("Creating folder: " + directory));
         fs.mkdirSync(directory);
     } else {
-        process.stdout.write(chalk.red("Directory already exists"));
+        console.log(chalk.red("Directory already exists"));
         process.exit(0);
     }
 
@@ -78,7 +78,7 @@ const main = async (answers) => {
         /**
          * Clone template
          */
-        process.stdout.write(step.FETCH);
+        console.log(step.FETCH);
         await promisifySpawn(
             `git clone -b ${REPOSITORY_BRANCH} ${REPOSITORY_NAME} ${directory} --depth 1`
         );
@@ -91,7 +91,7 @@ const main = async (answers) => {
             await exec(`mv -fv ${directory}/template/* ${directory}`);
             await exec(`mv -fv ${directory}/template/.* ${directory}`);
         } catch (e) {
-            // process.stderr.write(chalk.red(e));
+            // console.log(chalk.red(e));
         }
 
         // /**
@@ -112,18 +112,18 @@ const main = async (answers) => {
         /**
          * Install dependencies
          */
-        process.stdout.write(step.INSTALL)
+        console.log(step.INSTALL)
         await promisifySpawn('npm install')
 
         /**
          * House Keeping
          */
-        process.stdout.write(step.HOUSE_KEEPING)
+        console.log(step.HOUSE_KEEPING)
         await exec(`rm -rf ${directory}/bin`);
         await exec(`rm -rf ${directory}/template`);
 
     } catch (e) {
-        process.stderr.write(chalk.red(e));
+        console.log(chalk.red(e));
         process.exit(1);
     }
 };
