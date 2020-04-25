@@ -21,6 +21,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Branch name
-      run: echo running on branch $(git rev-parse --abbrev-ref HEAD)
+      run: echo running on branch ${BASE_BRANCH}
+      env:
+        BASE_BRANCH: ${{ github.base_ref }}
     - name: Install branch from npx
-      run: NODE_ENV=CI REPOSITORY_BRANCH=$(git rev-parse --abbrev-ref HEAD) npx juliantellez/typescript-react#$(git rev-parse --abbrev-ref HEAD)
+      run: NODE_ENV=CI REPOSITORY_BRANCH=${BASE_BRANCH} npx juliantellez/typescript-react#${BASE_BRANCH}
+      env:
+        BASE_BRANCH: ${{ github.base_ref }}
