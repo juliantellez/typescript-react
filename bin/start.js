@@ -10,14 +10,16 @@ const chalk = require("chalk");
 const exec = util.promisify(require("child_process").exec);
 const spawn = require("child_process").spawn;
 
-const REPOSITORY_NAME = "git@github.com:juliantellez/typescript-react.git";
-const REPOSITORY_BRANCH = "refactor/separate_bin_from_src";
+const {
+    REPOSITORY_NAME,
+    REPOSITORY_BRANCH,
+} = require('./constants')
 
 const step = {
-    CLONE: chalk.yellow("[ CLONE TEMPLATE ]"),
-    FETCH: chalk.yellow("[ FETCH TEMPLATE ]"),
-    INSTALL: chalk.yellow("[ INSTALL DEPENDENCIES ]"),
-    HOUSE_KEEPING: chalk.yellow("[ HOUSE KEEPING ]"),
+    CLONE: chalk.yellow("\n [ CLONE TEMPLATE ] \n"),
+    FETCH: chalk.yellow("\n [ FETCH TEMPLATE ] \n"),
+    INSTALL: chalk.yellow("\n [ INSTALL DEPENDENCIES ] \n"),
+    HOUSE_KEEPING: chalk.yellow("\n [ HOUSE KEEPING ] \n"),
 }
 
 const promisifySpawn = (command) => {
@@ -38,7 +40,6 @@ const promisifySpawn = (command) => {
         });
 
         currentProcess.on("close", (code) => {
-            process.stdout.write(code);
             Boolean(code) ? reject() : resolve();
         });
     });
