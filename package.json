@@ -10,5 +10,10 @@
     "chalk": "3.0.0",
     "inquirer": "7.0.4",
     "yargs": "15.1.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "husky": "^4.2.5"
   }
 }
