@@ -127,6 +127,7 @@ const main = async (answers) => {
 
     } catch (e) {
         console.log(chalk.red(e));
+        console.log(JSON.stringify(config));
         process.exit(1);
     }
 };
