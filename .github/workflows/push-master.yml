@@ -1,7 +1,7 @@
-name: Pull Request Checks
+name: Push Checks
 
 on:
-  pull_request:
+  push:
     branches: [ master ]
 
 jobs:
@@ -21,8 +21,8 @@ jobs:
     - name: Branch name
       run: echo running on branch ${GIT_BRANCH}
       env:
-        GIT_BRANCH: ${{ github.head_ref }}
+        GIT_BRANCH: master
     - name: Install branch from npx
       run: NODE_ENV=CI REPOSITORY_BRANCH=${GIT_BRANCH} npx juliantellez/typescript-react#${GIT_BRANCH}
       env:
-        GIT_BRANCH: ${{ github.head_ref }}
+        GIT_BRANCH: master
