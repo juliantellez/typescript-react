@@ -10,7 +10,9 @@ const chalk = require("chalk");
 const exec = util.promisify(require("child_process").exec);
 const spawn = require("child_process").spawn;
 
-const {config} = require('./config')
+const {
+    config
+} = require('./config')
 
 const step = {
     CLONE: chalk.yellow("\n [ CLONE TEMPLATE ] \n"),
@@ -80,7 +82,7 @@ const main = async (answers) => {
          */
         console.log(step.FETCH);
         await promisifySpawn(
-            `git clone -b ${config.REPOSITORY_BRANCH} ${config.REPOSITORY_NAME} ${directory} --depth 1`
+            `git clone --branch ${config.REPOSITORY_BRANCH} ${config.REPOSITORY_NAME} ${directory} --depth 1 --single-branch`
         );
 
         /**
