@@ -122,6 +122,7 @@ const main = async (answers) => {
          */
         console.log(step.HOUSE_KEEPING)
         await exec(`rm -rf ${directory}/.github`);
+        await exec(`rm -rf ${directory}/.git`);
         await exec(`rm -rf ${directory}/bin`);
         await exec(`rm -rf ${directory}/template`);
 
