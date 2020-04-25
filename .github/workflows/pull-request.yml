@@ -1,4 +1,4 @@
-name: npx install
+name: Pull Request Checks
 
 on:
   pull_request:
@@ -21,8 +21,8 @@ jobs:
     - name: Branch name
       run: echo running on branch ${GIT_BRANCH}
       env:
-        GIT_BRANCH: ${{ github.head_ref }}
+        GIT_BRANCH: ${GITHUB_REF##*/}
     - name: Install branch from npx
       run: NODE_ENV=CI REPOSITORY_BRANCH=${GIT_BRANCH} npx juliantellez/typescript-react#${GIT_BRANCH}
       env:
-        GIT_BRANCH: ${{ github.head_ref }}
+        GIT_BRANCH: ${GITHUB_REF##*/}
