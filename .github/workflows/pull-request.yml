@@ -19,10 +19,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Branch name
-      run: echo running on branch ${GIT_BRANCH}
-      env:
-        GIT_BRANCH: ${GITHUB_REF##*/}
+      run: echo running on branch ${GITHUB_REF##*/}
+      # env:
+      #   GIT_BRANCH: ${GITHUB_REF##*/}
     - name: Install branch from npx
-      run: NODE_ENV=CI REPOSITORY_BRANCH=${GIT_BRANCH} npx juliantellez/typescript-react#${GIT_BRANCH}
-      env:
-        GIT_BRANCH: ${GITHUB_REF##*/}
+      run: NODE_ENV=CI REPOSITORY_BRANCH=${GITHUB_REF##*/} npx juliantellez/typescript-react#${GITHUB_REF##*/}
+      # env:
+      #   GIT_BRANCH: ${GITHUB_REF##*/}
