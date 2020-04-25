@@ -9,6 +9,9 @@ const util = require('util')
 const chalk = require('chalk')
 const exec = util.promisify(require('child_process').exec)
 
+const REPOSITORY_NAME = "git@github.com:juliantellez/typescript-react.git"
+const REPOSITORY_BRANCH = "refactor/separate_bin_from_src"
+
 /**
  * @param {string} projectName
  * @param {string} directoryPath
@@ -46,7 +49,7 @@ const main = async answers => {
         console.log(chalk.yellow('[ FETCH ]'))
 
         const { stdout: fetch } = await exec(
-            `git clone git@github.com:juliantellez/typescript-react.git ${directory} --depth 1`
+            `git clone -b ${REPOSITORY_BRANCH} ${REPOSITORY_NAME} ${directory} --depth 1`
         )
         console.log(chalk.gray(fetch))
 
