@@ -10,10 +10,7 @@ const chalk = require("chalk");
 const exec = util.promisify(require("child_process").exec);
 const spawn = require("child_process").spawn;
 
-const {
-    REPOSITORY_NAME,
-    REPOSITORY_BRANCH,
-} = require('./constants')
+const {config} = require('./config')
 
 const step = {
     CLONE: chalk.yellow("\n [ CLONE TEMPLATE ] \n"),
@@ -69,8 +66,10 @@ const createProjectDir = (projectName, directoryPath) => {
  * @param {string} projectName
  */
 const main = async (answers) => {
+    const dirName = answers.projectName || config.PROJECT_NAME
+
     try {
-        const directory = createProjectDir(answers.projectName, process.cwd());
+        const directory = createProjectDir(dirName, process.cwd());
         /**
          * Move to current dir
          */
@@ -81,7 +80,7 @@ const main = async (answers) => {
          */
         console.log(step.FETCH);
         await promisifySpawn(
-            `git clone -b ${REPOSITORY_BRANCH} ${REPOSITORY_NAME} ${directory} --depth 1`
+            `git clone -b ${config.REPOSITORY_BRANCH} ${config.REPOSITORY_NAME} ${directory} --depth 1`
         );
 
         /**
@@ -120,6 +119,7 @@ const main = async (answers) => {
          * House Keeping
          */
         console.log(step.HOUSE_KEEPING)
+        await exec(`rm -rf ${directory}/.github`);
         await exec(`rm -rf ${directory}/bin`);
         await exec(`rm -rf ${directory}/template`);
 
