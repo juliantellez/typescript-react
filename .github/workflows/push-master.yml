@@ -22,7 +22,11 @@ jobs:
       run: echo running on branch ${GIT_BRANCH}
       env:
         GIT_BRANCH: master
-    - name: Install branch from npx
+    - name: Install branch from github npx
       run: NODE_ENV=CI REPOSITORY_BRANCH=${GIT_BRANCH} npx juliantellez/typescript-react#${GIT_BRANCH}
+      env:
+        GIT_BRANCH: master
+    - name: Install branch from npx
+      run: NODE_ENV=CI REPOSITORY_BRANCH=${GIT_BRANCH} npx typescript-react
       env:
         GIT_BRANCH: master
