@@ -13,6 +13,13 @@ const spawn = require("child_process").spawn;
 const REPOSITORY_NAME = "git@github.com:juliantellez/typescript-react.git";
 const REPOSITORY_BRANCH = "refactor/separate_bin_from_src";
 
+const step = {
+    CLONE: chalk.yellow("[ CLONE TEMPLATE ]"),
+    FETCH: chalk.yellow("[ FETCH TEMPLATE ]"),
+    INSTALL: chalk.yellow("[ INSTALL DEPENDENCIES ]"),
+    HOUSE_KEEPING: chalk.yellow("[ HOUSE KEEPING ]"),
+}
+
 const promisifySpawn = (command) => {
     return new Promise((resolve, reject) => {
         const [entry, ...args] = command.split(" ").filter(Boolean);
@@ -46,10 +53,11 @@ const promisifySpawn = (command) => {
 const createProjectDir = (projectName, directoryPath) => {
     const directory = directoryPath + "/" + projectName;
     if (!fs.existsSync(directory)) {
-        console.log(chalk.yellow("Creating folder: " + directory));
+        process.stdout.write(step.CLONE);
+        process.stdout.write(chalk.yellow("Creating folder: " + directory));
         fs.mkdirSync(directory);
     } else {
-        console.log(chalk.red("Directory already exists"));
+        process.stdout.write(chalk.red("Directory already exists"));
         process.exit(0);
     }
 
@@ -70,8 +78,7 @@ const main = async (answers) => {
         /**
          * Clone template
          */
-        console.log(chalk.yellow("[ FETCH TEMPLATE ]"));
-
+        process.stdout.write(step.FETCH);
         await promisifySpawn(
             `git clone -b ${REPOSITORY_BRANCH} ${REPOSITORY_NAME} ${directory} --depth 1`
         );
@@ -84,14 +91,13 @@ const main = async (answers) => {
             await exec(`mv -fv ${directory}/template/* ${directory}`);
             await exec(`mv -fv ${directory}/template/.* ${directory}`);
         } catch (e) {
-            // console.log(chalk.red(e));
+            // process.stderr.write(chalk.red(e));
         }
 
         // /**
         //  * Aggregate Json files
         //  */
         const packageJson = require(`${directory}/package.json`)
-
         const unifiedPackageJson = {
             ...packageJson,
             name: answers.projectName,
@@ -106,18 +112,18 @@ const main = async (answers) => {
         /**
          * Install dependencies
          */
-        console.log(chalk.yellow('[ NPM INSTALL DEPENDENCIES ]'))
+        process.stdout.write(step.INSTALL)
         await promisifySpawn('npm install')
 
         /**
          * House Keeping
          */
-        console.log(chalk.yellow('[ HOUSE KEEPING ]'))
+        process.stdout.write(step.HOUSE_KEEPING)
         await exec(`rm -rf ${directory}/bin`);
         await exec(`rm -rf ${directory}/template`);
 
     } catch (e) {
-        console.log(chalk.red(e));
+        process.stderr.write(chalk.red(e));
         process.exit(1);
     }
 };

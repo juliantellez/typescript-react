@@ -1,8 +1,4 @@
 {
-  "name": "typescript-react",
-  "version": "0.0.6",
-  "description": "typescript react starter",
-  "homepage": "https://github.com/juliantellez/typescript-react#readme",
   "scripts": {
     "build": "npm run types:sass && TS_NODE_PROJECT=tsconfig.json webpack --env.NODE_ENV=production --config ./config/webpack/webpack.config.ts",
     "build:analyze": "npm run types:sass && TS_NODE_PROJECT=tsconfig.json webpack ---env.ANALYZE --env.NODE_ENV=production --config ./config/webpack/webpack.config.ts",
