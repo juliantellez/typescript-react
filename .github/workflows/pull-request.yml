@@ -18,6 +18,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Set output
+      id: vars
+      run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+
+    - name: Check output
+      run: echo ${{ steps.vars.outputs.short_ref }}
+
     - name: Branch name
       run: echo running on branch ${GITHUB_REF##*/}
       # env:
