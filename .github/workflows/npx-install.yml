@@ -21,6 +21,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Branch name
-      run: echo running on branch ${GITHUB_REF##*/}
+      run: echo running on branch ${GITHUB_SHA}
     - name: Install branch from npx
-      run: REPOSITORY_BRANCH=${GITHUB_REF##*/} npx juliantellez/typescript-react#${GITHUB_REF##*/}
+      run: REPOSITORY_BRANCH=${GITHUB_SHA} npx juliantellez/typescript-react#${GITHUB_SHA}
