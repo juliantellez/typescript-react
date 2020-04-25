@@ -6,6 +6,13 @@ const config = {
         [filExtensions]: 'identity-obj-proxy',
     },
     /**
+     * Watch
+     */
+    watchPlugins: [
+        "jest-watch-typeahead/filename",
+        "jest-watch-typeahead/testname"
+    ],
+    /**
      * NYC coverage
      * see https://jestjs.io/docs/en/configuration#coveragedirectory-string
      */
