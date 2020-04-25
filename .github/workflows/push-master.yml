@@ -1,0 +1,32 @@
+name: Push Checks
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Branch name
+      run: echo running on branch ${GIT_BRANCH}
+      env:
+        GIT_BRANCH: master
+    - name: Install branch from github npx
+      run: NODE_ENV=CI REPOSITORY_BRANCH=${GIT_BRANCH} PROJECT_NAME=test-github npx juliantellez/typescript-react#${GIT_BRANCH}
+      env:
+        GIT_BRANCH: master
+    - name: Install branch from npx
+      run: NODE_ENV=CI REPOSITORY_BRANCH=${GIT_BRANCH} PROJECT_NAME=test-npx npx typescript-react
+      env:
+        GIT_BRANCH: master

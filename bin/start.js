@@ -4,10 +4,45 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 
-const fs = require('fs')
-const util = require('util')
-const chalk = require('chalk')
-const exec = util.promisify(require('child_process').exec)
+const fs = require("fs");
+const util = require("util");
+const chalk = require("chalk");
+const exec = util.promisify(require("child_process").exec);
+const spawn = require("child_process").spawn;
+
+const {
+    config
+} = require('./config')
+
+const step = {
+    CLONE: chalk.yellow("\n [ CLONE TEMPLATE ] \n"),
+    FETCH: chalk.yellow("\n [ FETCH TEMPLATE ] \n"),
+    INSTALL: chalk.yellow("\n [ INSTALL DEPENDENCIES ] \n"),
+    HOUSE_KEEPING: chalk.yellow("\n [ HOUSE KEEPING ] \n"),
+}
+
+const promisifySpawn = (command) => {
+    return new Promise((resolve, reject) => {
+        const [entry, ...args] = command.split(" ").filter(Boolean);
+        const currentProcess = spawn(entry, args);
+
+        currentProcess.stdout.on("message", (data) => {
+            process.stdout.write(data);
+        });
+
+        currentProcess.stdout.on("data", (data) => {
+            process.stdout.write(data);
+        });
+
+        currentProcess.stderr.on("data", (data) => {
+            process.stderr.write(data);
+        });
+
+        currentProcess.on("close", (code) => {
+            Boolean(code) ? reject() : resolve();
+        });
+    });
+};
 
 /**
  * @param {string} projectName
@@ -16,50 +51,59 @@ const exec = util.promisify(require('child_process').exec)
  * @returns {string} directory
  */
 const createProjectDir = (projectName, directoryPath) => {
-    const directory = directoryPath + '/' + projectName
+    const directory = directoryPath + "/" + projectName;
     if (!fs.existsSync(directory)) {
-        console.log(chalk.yellow('Creating folder: ' + directory))
-        fs.mkdirSync(directory)
+        console.log(step.CLONE);
+        console.log(chalk.yellow("Creating folder: " + directory));
+        fs.mkdirSync(directory);
     } else {
-        console.log(chalk.red('Directory already exists'))
-        process.exit(0)
+        console.log(chalk.red("Directory already exists"));
+        process.exit(0);
     }
 
-    return directory
-}
+    return directory;
+};
 
 /**
  * @param {string} projectName
  */
-const main = async answers => {
+const main = async (answers) => {
+    const dirName = answers.projectName || config.PROJECT_NAME
+
     try {
-        const directory = createProjectDir(answers.projectName, process.cwd())
+        const directory = createProjectDir(dirName, process.cwd());
         /**
          * Move to current dir
          */
-        process.chdir(directory)
+        process.chdir(directory);
 
         /**
-         * Install latest version
-         * Copy dependencies to current dir
+         * Clone template
          */
-        console.log(chalk.yellow('[ FETCH ]'))
-
-        const { stdout: fetch } = await exec(
-            `git clone git@github.com:juliantellez/typescript-react.git ${directory} --depth 1`
-        )
-        console.log(chalk.gray(fetch))
+        console.log(step.FETCH);
+        await promisifySpawn(
+            `git clone --branch ${config.REPOSITORY_BRANCH} ${config.REPOSITORY_NAME} ${directory} --depth 1 --single-branch`
+        );
 
         /**
-         * Aggregate Json files
+         * Copy template
+         * The following is a workaround for copying the template folder
          */
+        try {
+            await exec(`mv -fv ${directory}/template/* ${directory}`);
+            await exec(`mv -fv ${directory}/template/.* ${directory}`);
+        } catch (e) {
+            // console.log(chalk.red(e));
+        }
+
+        // /**
+        //  * Aggregate Json files
+        //  */
         const packageJson = require(`${directory}/package.json`)
-
         const unifiedPackageJson = {
+            ...packageJson,
             name: answers.projectName,
             version: '0.0.0',
-            scripts: packageJson.scripts,
-            devDependencies: packageJson.devDependencies,
         }
 
         fs.writeFileSync(
@@ -70,22 +114,22 @@ const main = async answers => {
         /**
          * Install dependencies
          */
-        console.log(chalk.yellow('[ NPM INSTALL DEPENDENCIES ]'))
-        const { stdout: installDeps } = await exec('npm install')
-        console.log(chalk.gray(installDeps))
+        console.log(step.INSTALL)
+        await promisifySpawn('npm install')
 
         /**
          * House Keeping
          */
-        console.log(chalk.yellow('[ HOUSE KEEPING ]'))
-        const { stdout: houseKeeping } = await exec(
-            `rm -rf ${directory}/bin ${directory}/.git `
-        )
-        console.log(chalk.gray(houseKeeping))
-    } catch (e) {
-        console.log(chalk.red(e))
-        process.exit(1)
-    }
-}
+        console.log(step.HOUSE_KEEPING)
+        await exec(`rm -rf ${directory}/.github`);
+        await exec(`rm -rf ${directory}/bin`);
+        await exec(`rm -rf ${directory}/template`);
 
-module.exports = main
+    } catch (e) {
+        console.log(chalk.red(e));
+        console.log(JSON.stringify(config));
+        process.exit(1);
+    }
+};
+
+module.exports = main;
