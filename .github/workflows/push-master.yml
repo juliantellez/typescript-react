@@ -27,6 +27,8 @@ jobs:
       env:
         GIT_BRANCH: master
     - name: Install branch from npx
-      run: NODE_ENV=CI REPOSITORY_BRANCH=${GIT_BRANCH} PROJECT_NAME=test-npx npx typescript-react
+      run: |
+        npm i typescript-react@latest
+        NODE_ENV=CI REPOSITORY_BRANCH=${GIT_BRANCH} PROJECT_NAME=test-npx npx typescript-react
       env:
         GIT_BRANCH: master
