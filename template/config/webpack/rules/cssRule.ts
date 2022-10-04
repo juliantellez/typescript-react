@@ -9,6 +9,7 @@ const sassCss: RuleSetRule = {
             options: {
                 modules: {
                     localIdentName: '[name]___[local]___[hash:base64:5]',
+                    namedExport: true,
                 },
                 importLoaders: 1,
                 url: true,

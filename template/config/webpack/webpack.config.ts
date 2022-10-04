@@ -32,7 +32,7 @@ const createWebpackConfig = (args: WebpackArgs): Configuration => {
             rules: [jsRule, cssRule],
         },
         plugins: createWebpackPlugins(env, paths),
-        devtool: env.isProduction() ? 'source-map' : 'cheap-eval-source-map',
+        devtool: env.isProduction() ? 'source-map' : 'cheap-module-source-map',
         cache: env.isProduction() ? false : true,
         optimization: {
             splitChunks: {
@@ -46,7 +46,6 @@ const createWebpackConfig = (args: WebpackArgs): Configuration => {
         ...(env.isDevelopment() && {
             devServer: {
                 compress: true,
-                contentBase: paths.src,
                 hot: true,
                 port: 3000,
                 historyApiFallback: true,
