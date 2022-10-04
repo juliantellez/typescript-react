@@ -1,9 +1,9 @@
-import { Rule } from 'webpack'
+import { RuleSetRule } from 'webpack'
 
 /**
  * Include ts, tsx, js, and jsx files.
  */
-const jsRule: Rule = {
+const jsRule: RuleSetRule = {
     test: /\.(ts|js)x?$/,
     exclude: /node_modules/,
     loader: 'babel-loader',
