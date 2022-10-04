@@ -1,6 +1,6 @@
-import { Rule } from 'webpack'
+import { RuleSetRule } from 'webpack'
 
-const sassCss: Rule = {
+const sassCss: RuleSetRule = {
     test: /\.s[ac]ss$/i,
     use: [
         'style-loader',
@@ -11,7 +11,6 @@ const sassCss: Rule = {
                     localIdentName: '[name]___[local]___[hash:base64:5]',
                 },
                 importLoaders: 1,
-                localsConvention: 'camelCase',
                 url: true,
                 import: true,
             },
@@ -27,13 +26,13 @@ const sassCss: Rule = {
  * e.g:
  * import 'prismjs/themes/prism-tomorrow?raw';
  */
-const rawCss: Rule = {
+const rawCss: RuleSetRule = {
     test: /\.css$/,
     resourceQuery: /^\?raw$/,
     use: ['style-loader', 'css-loader'],
 }
 
-const cssRule: Rule = {
+const cssRule: RuleSetRule = {
     oneOf: [rawCss, sassCss],
 }
 
